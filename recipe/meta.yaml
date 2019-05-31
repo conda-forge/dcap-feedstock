@@ -29,7 +29,7 @@ requirements:
   host:
     - gct
     - krb5
-    - openssl 1.0.2r
+    - openssl
     - zlib
     # Required for make check
     - cunit
