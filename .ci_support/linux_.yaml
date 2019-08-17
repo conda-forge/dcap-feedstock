@@ -14,9 +14,13 @@ docker_image:
 - condaforge/linux-anvil-comp7
 krb5:
 - '1.16'
+openssl:
+- 1.1.1a
 pin_run_as_build:
   krb5:
     max_pin: x.x
+  openssl:
+    max_pin: x.x.x
   zlib:
     max_pin: x.x
 zlib:

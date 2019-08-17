@@ -12,7 +12,7 @@ source:
     - 0001-PATCH-Missing-declaration.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
@@ -29,7 +29,7 @@ requirements:
   host:
     - gct
     - krb5
-    - openssl 1.0.2r
+    - openssl
     - zlib
     # Required for make check
     - cunit
