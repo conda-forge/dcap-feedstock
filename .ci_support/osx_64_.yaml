@@ -5,13 +5,15 @@ c_compiler:
 c_compiler_version:
 - '11'
 channel_sources:
-- conda-forge,defaults
+- conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '11'
+gct:
+- 6.2.1550507116
 krb5:
 - '1.19'
 macos_machine:
@@ -21,8 +23,6 @@ openssl:
 pin_run_as_build:
   krb5:
     max_pin: x.x
-  openssl:
-    max_pin: x.x.x
   zlib:
     max_pin: x.x
 target_platform:
