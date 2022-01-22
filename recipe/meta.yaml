@@ -10,6 +10,9 @@ source:
   sha256: 050a8d20c241abf358d5d72586f9abc43940e61d9ec9480040ac7da52ec804ac
   patches:
     - 0001-PATCH-Missing-declaration.patch
+    - 0002-Don-t-build-the-telnet-plugin.patch  # [osx]
+    - 0003-Recent-macOS-SDKs-don-t-define-stat64-as-it-s-identi.patch
+    - 0004-Since-macOS-10.10-ntohll-htonll-are-provided-as-pre-.patch
 
 build:
   number: 4

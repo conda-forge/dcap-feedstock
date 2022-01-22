@@ -1,0 +1,25 @@
+From 01c729a6bf608d750fa433ca96a26e860fa063d8 Mon Sep 17 00:00:00 2001
+From: Chris Burr <christopher.burr@cern.ch>
+Date: Sat, 22 Jan 2022 10:32:56 +0100
+Subject: [PATCH 3/3] Don't build the telnet plugin
+
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 2a59203..b0e10c8 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -550,7 +550,7 @@ AC_DEFINE_UNQUOTED(FACL_SYM,"$FACL_SYM",[native function for native or local fil
+ dnl We dont test for the dependencies for the telnet plugin
+ dnl as there appear to be no major ones.
+ 
+-notelnet="0"
++notelnet="1"
+ 
+ dnl Do the conditional compilation flags in rest of autotools.
+ 
+-- 
+2.29.2
+
