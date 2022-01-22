@@ -11,7 +11,7 @@ sh bootstrap.sh
     --with-krb5-gssapi-include="${PREFIX}/include"
 
 make -j${CPU_COUNT}
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR:-}" != "" ]]; then
     make check
 fi
 make install
