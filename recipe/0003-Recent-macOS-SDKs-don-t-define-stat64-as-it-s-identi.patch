@@ -1,31 +1,67 @@
-From 6cd25454830f0ef992efe9f6848e14e4dcf4b3b8 Mon Sep 17 00:00:00 2001
+From c385ea782ebfd335c68d1f39575509e1fb712cef Mon Sep 17 00:00:00 2001
 From: Chris Burr <christopher.burr@cern.ch>
 Date: Sun, 23 Jan 2022 11:06:37 +0100
 Subject: [PATCH 2/2] Check for _DARWIN_FEATURE_ONLY_64_BIT_INODE and define
  stat64/fstat64/lstat64 if needed
 
 ---
- configure.ac      | 6 ++++++
- src/string2stat.c | 2 ++
- 2 files changed, 8 insertions(+)
+ configure.ac      | 35 +++++++++++++++++++++++++++++++++++
+ src/string2stat.c |  2 ++
+ 2 files changed, 37 insertions(+)
 
 diff --git a/configure.ac b/configure.ac
-index ddfc8ba..5597114 100644
+index ddfc8ba..f0fa3b5 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -122,6 +122,12 @@ AC_TYPE_UID_T
+@@ -122,6 +122,23 @@ AC_TYPE_UID_T
  AC_C_BIGENDIAN
  AC_CHECK_TYPES([long long])
  
-+AC_EGREP_HEADER(
-+    [_DARWIN_FEATURE_ONLY_64_BIT_INODE],
-+    [sys/cdefs.h],
-+    [AC_DEFINE(fstat64, fstat, [64-bit operations are the same as 32-bit])
-+     AC_DEFINE(lstat64, lstat, [64-bit operations are the same as 32-bit])
-+     AC_DEFINE(stat64, stat, [64-bit operations are the same as 32-bit])])
++dnl Some apple platforms don't define "64" suffixed variants of stat/fstat/lstat
++
++AC_COMPILE_IFELSE(
++    [AC_LANG_PROGRAM([
++        #include <sys/cdefs.h>
++        #if !defined(_DARWIN_FEATURE_ONLY_64_BIT_INODE)
++        #error _DARWIN_FEATURE_ONLY_64_BIT_INODE not set
++        #endif
++    ])],
++    [
++        AC_DEFINE(stat64, stat, [64-bit operations are the same as 32-bit])
++        AC_DEFINE(fstat64, fstat, [64-bit operations are the same as 32-bit])
++        AC_DEFINE(lstat64, lstat, [64-bit operations are the same as 32-bit])
++    ],
++    [
++    ]
++)
  
  dnl Store the compile flags prior to testing the presence.
  
+@@ -479,6 +496,24 @@ FSTAT_SYM="__fxstat"
+ ;;
+ darwin*)
+ AC_MSG_RESULT([Setting Darwin preload methods])
++AC_COMPILE_IFELSE(
++    [AC_LANG_PROGRAM([
++        #include <sys/cdefs.h>
++        #if !defined(_DARWIN_FEATURE_ONLY_64_BIT_INODE)
++        #error _DARWIN_FEATURE_ONLY_64_BIT_INODE not set
++        #endif
++    ])],
++    [
++        AC_DEFINE(stat64, stat, [64-bit operations are the same as 32-bit])
++        AC_DEFINE(fstat64, fstat, [64-bit operations are the same as 32-bit])
++        AC_DEFINE(lstat64, lstat, [64-bit operations are the same as 32-bit])
++        STAT64_SYM="stat"
++        FSTAT64_SYM="fstat"
++        LSTAT64_SYM="lstat"
++    ],
++    [
++    ]
++)
+ ;;
+ sgi*)
+ AC_MSG_RESULT([Setting SGI preload methods])
 diff --git a/src/string2stat.c b/src/string2stat.c
 index 5572632..2045828 100644
 --- a/src/string2stat.c

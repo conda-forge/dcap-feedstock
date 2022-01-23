@@ -4,7 +4,7 @@ IFS=$'\n\t'
 
 sh bootstrap.sh
 
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" ]] && [[ "${target_platform}" = *-linux ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" = "1" ]] && [[ "${target_platform}" = linux-* ]]; then
     sed -i 's@AC_FUNC_MALLOC@@' configure.ac
     sed -i 's@AC_FUNC_REALLOC@@' configure.ac
 fi
