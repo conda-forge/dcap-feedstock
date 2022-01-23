@@ -1,31 +1,28 @@
-From fd943740f4fe5581ea5e77a925223dd4d10ee1b4 Mon Sep 17 00:00:00 2001
+From 458f12d8e7d8b6f9053f816ae269dbf596b4a50e Mon Sep 17 00:00:00 2001
 From: Chris Burr <christopher.burr@cern.ch>
-Date: Sat, 22 Jan 2022 10:30:52 +0100
-Subject: [PATCH 1/2] Recent macOS SDKs don't define *stat64 as it's identical
- to *stat
+Date: Sun, 23 Jan 2022 11:06:37 +0100
+Subject: [PATCH 2/2] Check for _DARWIN_FEATURE_ONLY_64_BIT_INODE and define
+ stat64/fstat64/lstat64 if needed
 
 ---
- configure.ac      | 9 +++++++++
+ configure.ac      | 6 ++++++
  src/string2stat.c | 2 ++
- 2 files changed, 11 insertions(+)
+ 2 files changed, 8 insertions(+)
 
 diff --git a/configure.ac b/configure.ac
-index ddfc8ba..ea5ecc2 100644
+index ddfc8ba..90a0788 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -122,6 +122,15 @@ AC_TYPE_UID_T
+@@ -122,6 +122,12 @@ AC_TYPE_UID_T
  AC_C_BIGENDIAN
  AC_CHECK_TYPES([long long])
  
-+AC_CHECK_DECL(stat64)
-+AC_CHECK_FUNC(stat64)
-+if test "$ac_cv_func_stat64" != yes || test "$ac_cv_func_stat64" != yes; then
-+    AC_MSG_NOTICE([Assuming 64-bit file operations are the same as 32-bit])
-+    AC_DEFINE(fstat64, fstat, [64-bit operations are the same as 32-bit])
-+    AC_DEFINE(lstat64, lstat, [64-bit operations are the same as 32-bit])
-+    AC_DEFINE(stat64, stat, [64-bit operations are the same as 32-bit])
-+fi
-+
++AC_EGREP_HEADER(
++    [[_DARWIN_FEATURE_ONLY_64_BIT_INODE]],
++    [sys/cdefs.h],
++    [AC_DEFINE(fstat64, fstat, [64-bit operations are the same as 32-bit])
++     AC_DEFINE(lstat64, lstat, [64-bit operations are the same as 32-bit])
++     AC_DEFINE(stat64, stat, [64-bit operations are the same as 32-bit])])
  
  dnl Store the compile flags prior to testing the presence.
  
