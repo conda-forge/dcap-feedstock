@@ -1,4 +1,4 @@
-From 458f12d8e7d8b6f9053f816ae269dbf596b4a50e Mon Sep 17 00:00:00 2001
+From 6cd25454830f0ef992efe9f6848e14e4dcf4b3b8 Mon Sep 17 00:00:00 2001
 From: Chris Burr <christopher.burr@cern.ch>
 Date: Sun, 23 Jan 2022 11:06:37 +0100
 Subject: [PATCH 2/2] Check for _DARWIN_FEATURE_ONLY_64_BIT_INODE and define
@@ -10,7 +10,7 @@ Subject: [PATCH 2/2] Check for _DARWIN_FEATURE_ONLY_64_BIT_INODE and define
  2 files changed, 8 insertions(+)
 
 diff --git a/configure.ac b/configure.ac
-index ddfc8ba..90a0788 100644
+index ddfc8ba..5597114 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -122,6 +122,12 @@ AC_TYPE_UID_T
@@ -18,7 +18,7 @@ index ddfc8ba..90a0788 100644
  AC_CHECK_TYPES([long long])
  
 +AC_EGREP_HEADER(
-+    [[_DARWIN_FEATURE_ONLY_64_BIT_INODE]],
++    [_DARWIN_FEATURE_ONLY_64_BIT_INODE],
 +    [sys/cdefs.h],
 +    [AC_DEFINE(fstat64, fstat, [64-bit operations are the same as 32-bit])
 +     AC_DEFINE(lstat64, lstat, [64-bit operations are the same as 32-bit])
