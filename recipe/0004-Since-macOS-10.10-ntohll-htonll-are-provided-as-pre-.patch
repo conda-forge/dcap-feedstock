@@ -1,0 +1,88 @@
+From 3beb4ea77017deb703c089a8e973961d133bf4db Mon Sep 17 00:00:00 2001
+From: Chris Burr <christopher.burr@cern.ch>
+Date: Sat, 22 Jan 2022 10:32:43 +0100
+Subject: [PATCH 1/2] Since macOS 10.10 ntohll/htonll are provided as
+ pre-processor macros
+
+---
+ src/dcap.c           | 12 ++++++------
+ src/dcap_functions.h | 11 +++++++----
+ 2 files changed, 13 insertions(+), 10 deletions(-)
+
+diff --git a/src/dcap.c b/src/dcap.c
+index e753efc..7691e93 100644
+--- a/src/dcap.c
++++ b/src/dcap.c
+@@ -127,10 +127,10 @@ static ConfirmationBlock get_reply(int);
+ static int name_invalid(char *);
+ static server * url2srv(dcap_url *);
+ 
+-#ifndef HAVE_HTONLL
++#if !defined(htonll) && !defined(HAVE_HTONLL)
+     uint64_t  htonll(uint64_t);
+ #endif
+-#ifndef HAVE_NTOHLL
++ #if !defined(ntohll) && !defined(HAVE_NTOHLL)
+     uint64_t  ntohll(uint64_t);
+ #endif
+ 
+@@ -1631,7 +1631,7 @@ get_fin(struct vsp_node * node)
+ #  error Unknown Byte order
+ #endif
+ 
+-#ifndef HAVE_NTOHLL
++#if !defined(ntohll) && !defined(HAVE_NTOHLL)
+     uint64_t
+     ntohll(uint64_t x)
+     {
+@@ -1641,15 +1641,15 @@ get_fin(struct vsp_node * node)
+         return x;
+     #endif /* I_AM_LITTLE_ENDIAN */
+     }
+-#endif /* HAVE_NTOHLL */
++#endif /* ntohll */
+ 
+-#ifndef HAVE_HTONLL
++#if !defined(htonll) && !defined(HAVE_HTONLL)
+     uint64_t
+     htonll(uint64_t arg)
+     {
+         return ntohll(arg);
+     }
+-#endif /* HAVE_HTONLL */
++#endif /* htonll */
+ 
+ void dc_setReplyHostName(const char *s)
+ {
+diff --git a/src/dcap_functions.h b/src/dcap_functions.h
+index 977782c..6da7157 100644
+--- a/src/dcap_functions.h
++++ b/src/dcap_functions.h
+@@ -20,6 +20,9 @@
+  */
+ #include <sys/types.h>
+ #include <stdint.h>
++#ifndef WIN32
++#   include <arpa/inet.h>
++#endif
+ 
+ #include "dcap_types.h"
+ #include "ioTunnel.h"
+@@ -39,10 +42,10 @@ int get_fin( struct vsp_node *);
+ int get_ack(int , ConfirmationBlock * );
+ 
+ 
+-#ifndef HAVE_NTOHLL
++#if !defined(ntohll) && !defined(HAVE_NTOHLL)
+ uint64_t ntohll(uint64_t x);
+-#endif /* HAVE_NTOHLL */
++#endif /* ntohll */
+ 
+-#ifndef HAVE_HTONLL
++#if !defined(htonll) && !defined(HAVE_HTONLL)
+ uint64_t htonll(uint64_t arg);
+-#endif /* HAVE_HTONLL */
++#endif /* htonll */
+-- 
+2.29.2
+
