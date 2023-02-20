@@ -9,10 +9,8 @@ source:
   url: https://github.com/dCache/{{ name }}/archive/{{ version }}.tar.gz
   sha256: dda98990d93cded815ee425101674ad2f48438fff76b3d4d5d3f91e380e9cc49
   patches:
-    - 0001-PATCH-Missing-declaration.patch
-    - 0002-Don-t-build-the-telnet-plugin.patch  # [osx]
-    - 0003-Recent-macOS-SDKs-don-t-define-stat64-as-it-s-identi.patch
-    - 0004-Since-macOS-10.10-ntohll-htonll-are-provided-as-pre-.patch
+    - 0001-Don-t-build-the-telnet-plugin.patch  # [osx]
+    - 0002-Check-for-_DARWIN_FEATURE_ONLY_64_BIT_INODE-and-defi.patch
 
 build:
   number: 0
