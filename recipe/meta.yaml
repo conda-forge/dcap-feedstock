@@ -1,5 +1,5 @@
 {% set name = "dcap" %}
-{% set version = "2.47.12" %}
+{% set version = "2.47.14" %}
 
 package:
   name: {{ name|lower }}
@@ -7,15 +7,13 @@ package:
 
 source:
   url: https://github.com/dCache/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: 050a8d20c241abf358d5d72586f9abc43940e61d9ec9480040ac7da52ec804ac
+  sha256: dda98990d93cded815ee425101674ad2f48438fff76b3d4d5d3f91e380e9cc49
   patches:
-    - 0001-PATCH-Missing-declaration.patch
-    - 0002-Don-t-build-the-telnet-plugin.patch  # [osx]
-    - 0003-Recent-macOS-SDKs-don-t-define-stat64-as-it-s-identi.patch
-    - 0004-Since-macOS-10.10-ntohll-htonll-are-provided-as-pre-.patch
+    - 0001-Don-t-build-the-telnet-plugin.patch  # [osx]
+    - 0002-Check-for-_DARWIN_FEATURE_ONLY_64_BIT_INODE-and-defi.patch
 
 build:
-  number: 6
+  number: 0
   skip: true  # [win]
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
@@ -46,7 +44,7 @@ about:
   license: LGPL-2.0-only
   license_family: GPL
   license_file: COPYING.LIB
-  summary: 'The dCache dccp client'
+  summary: The dCache dccp client
   description: |
     dcap is a POSIX like interface for accessing dCache, allowing unmodified
     applications to access dCache transparently. This access method uses a
