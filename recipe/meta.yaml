@@ -13,7 +13,7 @@ source:
     - 0002-Check-for-_DARWIN_FEATURE_ONLY_64_BIT_INODE-and-defi.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
   run_exports:
     - {{ pin_subpackage(name, max_pin='x.x') }}
