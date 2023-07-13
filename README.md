@@ -1,11 +1,11 @@
-About dcap
-==========
+About dcap-feedstock
+====================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/dcap-feedstock/blob/main/LICENSE.txt)
 
 Home: https://www.dcache.org
 
 Package license: LGPL-2.0-only
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/dcap-feedstock/blob/main/LICENSE.txt)
 
 Summary: The dCache dccp client
 
