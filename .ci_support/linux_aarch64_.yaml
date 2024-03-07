@@ -19,7 +19,7 @@ cxx_compiler_version:
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
 gct:
-- 6.2.1629922860
+- 6.2.1705709074
 krb5:
 - '1.21'
 openssl:
